@@ -13,11 +13,14 @@ use Events\Event as Event;
  * Lista de todos os lancamentos
  */
 $app->get('/entry', function (Request $request, Response $response) use ($app) {
-    /* $newEntry = new Entry();
+    $newEntry = new Entry();
     $newEntry->attach(new Event());
     $newEntry->newEntry();
     $return = $response->withJson(['msg' => 'works!'], 200);
- */
+ 
+    $manager = new MongoDB\Driver\Manager("mongodb://localhost:27017");
+    var_dump($manager);
+
     return $return;
 });
 
