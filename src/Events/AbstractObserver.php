@@ -3,5 +3,5 @@ namespace Events;
 
 abstract class AbstractObserver
 {
-    abstract public function newEvent();
+    abstract public function newEvent($params);
 }

@@ -1,20 +1,15 @@
 version: '3.3'
-
-volumes:
-  data:
-
+ 
 services:
   slim:
     container_name: event-sourcing
     volumes:
       - "./:/var/www"
-      - "/var/www/vendor"
     build: .
     command: ["php", "-S", "0.0.0.0:8080"]
     ports:
       - "80:8080"
-
+    depends_on:
+      - mongo
   mongo:
     image: mongo
-    ports:
-      - 27017:27017

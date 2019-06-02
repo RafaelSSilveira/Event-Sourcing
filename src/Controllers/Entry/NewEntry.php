@@ -1,7 +1,7 @@
 <?php namespace Controllers;
 
 require_once './src/Events/Event.php';
-require_once 'AbstractSubject.php';
+require_once './src/Controllers/AbstractSubject.php';
 
 use Events\Event;
 
@@ -26,16 +26,25 @@ class NewEntry extends AbstractSubject
             }
         }
     }
-    public function notify()
+
+    public function notify($data)
     {
         foreach ($this->observers as $obs) {
-            $obs->newEvent($this);
+            $obs->newEvent($data);
         }
     }
 
-    public function newEntry()
+    public function newEntry($params, $id)
     {
-        echo 'New Entry!</br> ';
-        $this->notify();
+        $id_entry = $id === null ? time() : $id;
+        $data = [
+            'id_entry' => $id_entry,
+            'value' => $params->value ? $params->value : 0,
+            'date' => date("Y-m-d H:i:s"),
+            'status' => $params->status ? $params->status : false
+        ];
+        $this->notify($data);
+
+        return $id_entry;
     }
 }
