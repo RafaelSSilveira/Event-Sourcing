@@ -3,7 +3,6 @@
 This project is a implementation of event sourcing architeture.
 
 ### Build
-    $ npm install
     $ docker-compose up --build
 
 
