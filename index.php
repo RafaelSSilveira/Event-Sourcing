@@ -73,7 +73,7 @@ $app->delete('/entry/{id}', function (Request $request, Response $response) use 
     $main->newEntry(null, intval($id));
     $return = $response->withJson([
         'success' => true,
-        'msg' => 'Altered Entry!',
+        'msg' => 'Deleted Entry!',
         'data' => [
             'entry_id' => $id
         ]

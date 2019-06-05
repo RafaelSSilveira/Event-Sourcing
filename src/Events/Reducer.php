@@ -23,18 +23,30 @@ class Reducer
 
         foreach ($events as $event) {
             empty($results) && array_push($results, $event);
-            if ($event->status === true) {
-                foreach ($results as $result) {
-                    if ($result->id_entry === $event->id_entry) {
-                        $result->value = $event->value;
-                    } elseif (!in_array($event->id_entry, $aux)) {
-                        array_push($results, $event);
-                    }
-                    array_push($aux, $event->id_entry);
+            foreach ($results as $result) {
+                if ($result->id_entry === $event->id_entry) {
+                    $result->value = $result->value === $event->value ? $result->value : $event->value;
+                    $result->status = $result->status === $event->status ? $result->status : $event->status;
+                    $result->date = $event->date;
+                } elseif (!in_array($event->id_entry, $aux)) {
+                    array_push($results, $event);
                 }
+                array_push($aux, $event->id_entry);
             }
         }
 
-        return $results;
+        return $this->removeInvalidEntry($results);
+    }
+
+    public function removeInvalidEntry($entrys)
+    {
+        $validEntrys = array();
+        foreach ($entrys as $entry) {
+            if ($entry->status === true) {
+                array_push($validEntrys, $entry);
+            }
+        }
+
+        return $validEntrys;
     }
 }
